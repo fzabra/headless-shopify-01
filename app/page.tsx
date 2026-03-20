@@ -11,7 +11,7 @@ export default async function HomePage() {
     <div className="stack">
       <HeroBanner slides={slides} />
 
-      <section>
+      <section className="container stack">
         <h2 className="page-title">Featured products</h2>
         <div className="grid">
           {products.map((product) => (

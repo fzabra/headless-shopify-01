@@ -32,6 +32,12 @@ export const PRODUCT_BY_HANDLE_QUERY = `
         url
         altText
       }
+      images(first: 1) {
+        nodes {
+          url
+          altText
+        }
+      }
       priceRange {
         minVariantPrice {
           amount

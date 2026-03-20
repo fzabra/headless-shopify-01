@@ -11,8 +11,8 @@ export function ProductCard({ product }: { product: Product }) {
           <Image
             src={product.featuredImage.url}
             alt={product.featuredImage.altText || product.title}
-            width={640}
-            height={640}
+            width={320}
+            height={430}
             className="card-media"
           />
         ) : (

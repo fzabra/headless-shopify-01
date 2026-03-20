@@ -1,51 +1,51 @@
 # Shopify Headless Portfolio Boilerplate
 
-Boilerplate com **Next.js App Router** consumindo a **Shopify Storefront API (GraphQL)**.
+Boilerplate built with **Next.js App Router** consuming the **Shopify Storefront API (GraphQL)**.
 
-## Requisitos
+## Requirements
 
 - Node.js 20+
-- Uma Shopify Development Store
-- Storefront Access Token ativo
+- A Shopify Development Store
+- An active Storefront Access Token
 
 ## Setup
 
-1. Instale dependencias:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Configure ambiente:
+2. Configure the environment:
 
 ```bash
 cp .env.example .env.local
 ```
 
-3. Preencha:
+3. Fill in:
 
-- `SHOPIFY_STORE_DOMAIN` (ex.: `minha-loja.myshopify.com`)
+- `SHOPIFY_STORE_DOMAIN` (e.g.: `my-store.myshopify.com`)
 - `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
-- `SHOPIFY_API_VERSION` (ex.: `2025-10`)
+- `SHOPIFY_API_VERSION` (e.g.: `2025-10`)
 
-4. Rode:
+4. Run:
 
 ```bash
 npm run dev
 ```
 
-## Rotas
+## Routes
 
-- `/` Home com produtos em destaque
-- `/collections` Lista colecoes
-- `/collections/[handle]` Produtos por colecao
-- `/products/[handle]` Produto + variantes + add to cart
-- `/search?q=...` Busca
-- `/cart` Carrinho
+- `/` Home with featured products
+- `/collections` Collections list
+- `/collections/[handle]` Products by collection
+- `/products/[handle]` Product details + variants + add to cart
+- `/search?q=...` Search
+- `/cart` Cart
 
-## Estrutura
+## Structure
 
-- `lib/shopify/client.ts`: cliente GraphQL
-- `lib/shopify/queries.ts`: queries e mutations
-- `lib/shopify/types.ts`: tipos usados no app
-- `app/actions/cart.ts`: server actions de carrinho
+- `lib/shopify/client.ts`: GraphQL client
+- `lib/shopify/queries.ts`: queries and mutations
+- `lib/shopify/types.ts`: app types
+- `app/actions/cart.ts`: cart server actions

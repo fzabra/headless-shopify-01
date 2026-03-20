@@ -18,13 +18,15 @@ export default async function ProductPage({
     notFound();
   }
 
+  const productImage = product.featuredImage || product.images?.nodes?.[0] || null;
+
   return (
     <article className="product-layout">
       <section>
-        {product.featuredImage ? (
+        {productImage ? (
           <Image
-            src={product.featuredImage.url}
-            alt={product.featuredImage.altText || product.title}
+            src={productImage.url}
+            alt={productImage.altText || product.title}
             width={900}
             height={900}
             className="product-image"

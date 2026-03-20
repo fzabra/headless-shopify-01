@@ -15,24 +15,10 @@ export default async function SearchPage({
 
   return (
     <section className="stack">
-      <h1 className="page-title">Search</h1>
-
-      <form action="/search" className="search-form">
-        <input
-          type="search"
-          name="q"
-          defaultValue={query}
-          placeholder="Search products..."
-          minLength={2}
-          required
-        />
-        <button type="submit" className="primary">
-          Search
-        </button>
-      </form>
+      <h1 className="page-title">Search results</h1>
 
       {query.length === 0 ? (
-        <p className="text-muted">Type at least 2 characters to search.</p>
+        <p className="text-muted">Use the search field in the header to find products.</p>
       ) : (
         <p className="text-muted">
           Showing results for <strong>{query}</strong>. <Link href="/collections">Browse collections</Link>

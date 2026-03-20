@@ -21,6 +21,9 @@ export type Product = {
   title: string;
   description: string;
   featuredImage: Image | null;
+  images?: {
+    nodes: Image[];
+  };
   priceRange: {
     minVariantPrice: Money;
   };

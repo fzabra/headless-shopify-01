@@ -18,7 +18,7 @@ export default async function CartPage() {
 
   if (!cart || cart.lines.nodes.length === 0) {
     return (
-      <section className="stack">
+      <section className="container stack">
         <h1 className="page-title">Cart</h1>
         <p className="text-muted">Your cart is empty.</p>
         <div>
@@ -31,86 +31,90 @@ export default async function CartPage() {
   }
 
   return (
-    <section className="stack">
+    <section className="container stack">
       <h1 className="page-title">Cart</h1>
 
-      <div className="stack">
-        {cart.lines.nodes.map((line) => (
-          <article className="card" key={line.id}>
-            <div className="card-body cart-line">
-              {line.merchandise.product.featuredImage ? (
-                <Image
-                  src={line.merchandise.product.featuredImage.url}
-                  alt={line.merchandise.product.featuredImage.altText || line.merchandise.product.title}
-                  width={80}
-                  height={80}
-                />
-              ) : (
-                <div className="card-media placeholder">No image</div>
-              )}
+      <div className="cart-layout">
+        <div className="stack cart-lines">
+          {cart.lines.nodes.map((line) => (
+            <article className="card" key={line.id}>
+              <div className="card-body cart-line">
+                {line.merchandise.product.featuredImage ? (
+                  <Image
+                    src={line.merchandise.product.featuredImage.url}
+                    alt={line.merchandise.product.featuredImage.altText || line.merchandise.product.title}
+                    width={80}
+                    height={80}
+                  />
+                ) : (
+                  <div className="card-media placeholder">No image</div>
+                )}
 
-              <div>
-                <h2>
-                  <Link href={`/products/${line.merchandise.product.handle}`}>
-                    {line.merchandise.product.title}
-                  </Link>
-                </h2>
-                <p className="text-muted">Variant: {line.merchandise.title}</p>
-                <p>
-                  {formatMoney(line.cost.totalAmount.amount, line.cost.totalAmount.currencyCode)}
-                </p>
+                <div>
+                  <h2>
+                    <Link href={`/products/${line.merchandise.product.handle}`}>
+                      {line.merchandise.product.title}
+                    </Link>
+                  </h2>
+                  <p className="text-muted">Variant: {line.merchandise.title}</p>
+                  <p>
+                    {formatMoney(line.cost.totalAmount.amount, line.cost.totalAmount.currencyCode)}
+                  </p>
+                </div>
+
+                <div className="stack">
+                  <form action={updateCartLineAction} className="inline-form">
+                    <input type="hidden" name="lineId" value={line.id} />
+                    <input type="hidden" name="quantity" value={Math.max(1, line.quantity - 1)} />
+                    <button type="submit" aria-label="Decrease quantity">
+                      -
+                    </button>
+                  </form>
+
+                  <p>Qty: {line.quantity}</p>
+
+                  <form action={updateCartLineAction} className="inline-form">
+                    <input type="hidden" name="lineId" value={line.id} />
+                    <input type="hidden" name="quantity" value={line.quantity + 1} />
+                    <button type="submit" aria-label="Increase quantity">
+                      +
+                    </button>
+                  </form>
+
+                  <form action={removeCartLineAction}>
+                    <input type="hidden" name="lineId" value={line.id} />
+                    <button type="submit">Remove</button>
+                  </form>
+                </div>
               </div>
+            </article>
+          ))}
+        </div>
 
-              <div className="stack">
-                <form action={updateCartLineAction} className="inline-form">
-                  <input type="hidden" name="lineId" value={line.id} />
-                  <input type="hidden" name="quantity" value={Math.max(1, line.quantity - 1)} />
-                  <button type="submit" aria-label="Decrease quantity">
-                    -
-                  </button>
-                </form>
+        <aside className="cart-summary">
+          <article className="card">
+            <div className="card-body stack">
+              <p>
+                Subtotal: {" "}
+                <strong>
+                  {formatMoney(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}
+                </strong>
+              </p>
 
-                <p>Qty: {line.quantity}</p>
+              <p>
+                Total: {" "}
+                <strong>{formatMoney(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}</strong>
+              </p>
 
-                <form action={updateCartLineAction} className="inline-form">
-                  <input type="hidden" name="lineId" value={line.id} />
-                  <input type="hidden" name="quantity" value={line.quantity + 1} />
-                  <button type="submit" aria-label="Increase quantity">
-                    +
-                  </button>
-                </form>
-
-                <form action={removeCartLineAction}>
-                  <input type="hidden" name="lineId" value={line.id} />
-                  <button type="submit">Remove</button>
-                </form>
-              </div>
+              <CheckoutModal
+                checkoutUrl={cart.checkoutUrl}
+                itemsCount={cart.totalQuantity}
+                totalLabel={formatMoney(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}
+              />
             </div>
           </article>
-        ))}
+        </aside>
       </div>
-
-      <article className="card">
-        <div className="card-body stack">
-          <p>
-            Subtotal: {" "}
-            <strong>
-              {formatMoney(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}
-            </strong>
-          </p>
-
-          <p>
-            Total: {" "}
-            <strong>{formatMoney(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}</strong>
-          </p>
-
-          <CheckoutModal
-            checkoutUrl={cart.checkoutUrl}
-            itemsCount={cart.totalQuantity}
-            totalLabel={formatMoney(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}
-          />
-        </div>
-      </article>
     </section>
   );
 }
